@@ -1,0 +1,30 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  data: CollectionEntry<"experience">["data"];
+  draft?: boolean;
+}
+
+const { data, draft = false } = Astro.props;
+---
+
+<div class="relative">
+  <span class="absolute -left-[37px] top-1.5 h-3 w-3 rounded-full border-2 border-ink bg-paper" aria-hidden="true"></span>
+  <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+    <h3 class="font-display text-xl font-bold tracking-tight">
+      {data.role}
+      {draft && <span class="draft-chip ml-3 align-middle">Draft</span>}
+    </h3>
+    <span class="font-mono text-xs uppercase tracking-wider text-ink-soft">{data.period}</span>
+  </div>
+  <p class="mt-1 text-sm font-medium text-ink-2">{data.company}</p>
+  <ul class="mt-4 space-y-2.5">
+    {data.points.map((pt) => (
+      <li class="flex gap-3 leading-relaxed text-ink-soft">
+        <span class="mt-[9px] h-1.5 w-1.5 shrink-0 bg-volt-deep" aria-hidden="true"></span>
+        <span>{pt}</span>
+      </li>
+    ))}
+  </ul>
+</div>

@@ -1,0 +1,80 @@
+---
+// Decorative abstract art tile for project rows. Pure SVG, no images
+// required — swaps in per-project via the `art` frontmatter field.
+interface Props {
+  variant: "grid" | "signal" | "field" | "orbit";
+  label: string;
+}
+const { variant, label } = Astro.props;
+const INK = "#17130c";
+const VOLT = "#b7e826";
+const TINT = "rgba(23,19,12,0.10)";
+const WARM = "#d8cdb6";
+---
+
+<div class="relative aspect-[4/3] w-full overflow-hidden border border-line bg-paper-2" role="img" aria-label={`Abstract artwork for ${label}`}>
+  <svg viewBox="0 0 400 300" class="h-full w-full" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    {variant === "field" && (
+      <>
+        <!-- field grid -->
+        {Array.from({ length: 11 }).map((_, i) => (
+          <line x1={i * 40} y1="0" x2={i * 40} y2="300" stroke={TINT} stroke-width="1" />
+        ))}
+        {Array.from({ length: 8 }).map((_, i) => (
+          <line x1="0" y1={i * 42} x2="400" y2={i * 42} stroke={TINT} stroke-width="1" />
+        ))}
+        <path d="M200 60 L200 240" stroke={INK} stroke-width="6" />
+        <circle cx="200" cy="150" r="34" fill="none" stroke={INK} stroke-width="4" />
+        <rect x="160" y="80" width="80" height="140" fill={VOLT} opacity="0.85" />
+        <text x="200" y="165" text-anchor="middle" font-family="monospace" font-size="28" font-weight="bold" fill={INK}>SL</text>
+      </>
+    )}
+    {variant === "signal" && (
+      <>
+        {Array.from({ length: 24 }).map((_, i) => {
+          const h = 30 + ((i * 37) % 200);
+          return <rect key={i} x={i * 17 + 4} y={300 - h} width="9" height={h} fill={i % 3 === 0 ? VOLT : i % 3 === 1 ? INK : TINT} opacity={i % 3 === 2 ? 0.5 : 1} />;
+        })}
+        <polyline points="0,150 60,120 120,160 180,90 240,140 300,60 360,120 400,80" fill="none" stroke={INK} stroke-width="5" />
+        <circle cx="300" cy="60" r="10" fill={VOLT} stroke={INK} stroke-width="3" />
+      </>
+    )}
+    {variant === "grid" && (
+      <>
+        {Array.from({ length: 21 }).map((_, i) => (
+          <line key={`h${i}`} x1="0" y1={i * 15} x2="400" y2={i * 15} stroke={TINT} stroke-width="1" />
+        ))}
+        {Array.from({ length: 21 }).map((_, i) => (
+          <line key={`v${i}`} x1={i * 20} y1="0" x2={i * 20} y2="300" stroke={TINT} stroke-width="1" />
+        ))}
+        <rect x="40" y="50" width="150" height="90" fill="none" stroke={INK} stroke-width="4" />
+        <rect x="55" y="65" width="120" height="24" fill={INK} />
+        <rect x="55" y="99" width="84" height="24" fill={VOLT} />
+        <circle cx="290" cy="120" r="46" fill="none" stroke={INK} stroke-width="4" />
+        <circle cx="290" cy="120" r="24" fill={VOLT} />
+        <circle cx="290" cy="120" r="6" fill={INK} />
+        <circle cx="140" cy="230" r="8" fill={INK} />
+        <circle cx="200" cy="200" r="5" fill={INK} opacity="0.5" />
+        <circle cx="300" cy="250" r="10" fill="none" stroke={INK} stroke-width="3" />
+      </>
+    )}
+    {variant === "orbit" && (
+      <>
+        <circle cx="200" cy="150" r="110" fill="none" stroke={TINT} stroke-width="1.5" stroke-dasharray="4 6" />
+        <ellipse cx="200" cy="150" rx="150" ry="52" fill="none" stroke={INK} stroke-width="2.5" transform="rotate(-18 200 150)" />
+        <ellipse cx="200" cy="150" rx="86" ry="30" fill="none" stroke={INK} stroke-width="2" transform="rotate(24 200 150)" />
+        <circle cx="332" cy="98" r="16" fill={VOLT} />
+        <circle cx="332" cy="98" r="4" fill={INK} />
+        <circle cx="200" cy="150" r="34" fill={INK} opacity="0.9" />
+        <circle cx="200" cy="150" r="10" fill={VOLT} />
+        <circle cx="140" cy="212" r="7" fill="none" stroke={INK} stroke-width="2.5" />
+        <rect x="20" y="30" width="70" height="8" fill={WARM} />
+        <rect x="20" y="46" width="46" height="8" fill={INK} opacity="0.35" />
+      </>
+    )}
+  </svg>
+  <!-- caption chip -->
+  <span class="absolute bottom-3 left-3 bg-paper/90 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-soft">
+    {variant === "field" ? "fig. 01" : variant === "signal" ? "fig. 02" : variant === "orbit" ? "fig. 03" : "fig. 04"}
+  </span>
+</div>

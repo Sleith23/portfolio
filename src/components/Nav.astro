@@ -1,0 +1,41 @@
+---
+import site from "../data/site";
+const LINKS = [
+  { href: "#work", label: "Work" },
+  { href: "#about", label: "About" },
+  { href: "#experience", label: "Experience" },
+  { href: "#contact", label: "Contact" },
+];
+---
+
+<header
+  class="sticky top-0 z-50 border-b border-line bg-paper/85 backdrop-blur-sm"
+>
+  <nav class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3.5 sm:px-8">
+    <a href="#top" class="group flex items-center gap-2.5" aria-label="Home">
+      <span
+        class="grid h-8 w-8 place-items-center bg-ink font-mono text-[13px] font-medium text-volt transition-transform group-hover:-rotate-6"
+      >
+        SL
+      </span>
+      <span class="font-display text-[17px] font-bold tracking-tight">
+        {site.name}
+      </span>
+    </a>
+
+    <div class="hidden items-center gap-7 md:flex">
+      {LINKS.map((l) => (
+        <a href={l.href} class="font-mono text-xs tracking-wide text-ink-soft transition-colors hover:text-ink">
+          {l.label}
+        </a>
+      ))}
+    </div>
+
+    <a
+      href="#contact"
+      class="rounded-full border border-ink/20 px-4 py-1.5 font-mono text-xs transition-colors hover:border-ink hover:bg-ink hover:text-volt"
+    >
+      {site.cta}
+    </a>
+  </nav>
+</header>
